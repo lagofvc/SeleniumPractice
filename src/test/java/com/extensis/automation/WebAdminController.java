@@ -1,4 +1,4 @@
-package com.lago.automation;
+package com.extensis.automation;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
