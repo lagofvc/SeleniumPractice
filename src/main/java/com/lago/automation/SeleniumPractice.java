@@ -3,7 +3,6 @@ package com.lago.automation;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 /**
@@ -14,20 +13,20 @@ public class SeleniumPractice {
     //DEFAULTS
     private static final String WEBADMINURL = "http://localhost:18081";
 
-    //XPATHS - for element location
-    private static final String PATHTOUSERNAME = "//input[@name='userName']";
-    private static final String PATHTOPSWD = "//input[@name='password']";
-    private static final String LOGINBUTTON = "//input[@name='loginButton']";
+    //ELEMENT NAMES, XPATHS - for element location
+    private static final String USERNAME = "userName";
+    private static final String PATHTOPSWD = "password";
+    private static final String LOGINBUTTON = "loginButton";
+    private static final String RESTOREBUTTON = "restoreButton";
+    private static final String DATARESTOREPAGE = "DatastoreBackupRestorePage";
+    private static final String RESTOREPATH = "restorePath";
 
-    private static final String RESTOREBUTTON = "//input[@name='restoreButton']";
-    private static final String BACKUPSLINK = "//a[contains(@href,'DatastoreBackupRestorePage')]";
-    private static final String DATARESTOREFORM = "//form[@id='datastoreRestoreForm']";
-    private static final int RESTORE_WAIT = 60000; //1 minute
+    private static final String XP_BACKUPSLINK = "//a[contains(@href,'" + DATARESTOREPAGE + "')]";
 
     //DATA
     private static final String ADMINISTRATOR = "administrator";
     private static final String PASSWORD = "password";
-    private static final String DATA_BACKUP_5_2 = "FAKE_DB.tar";
+    private static final int RESTORE_WAIT = 60000; //1 minute
 
     public static void main(String arg[]){
         String fileToRestore = arg[0];
@@ -37,22 +36,18 @@ public class SeleniumPractice {
         webDriver.get(WEBADMINURL);
 
         //LOGIN
-        WebElement userNameFld = webDriver.findElement(By.xpath(PATHTOUSERNAME));
-        userNameFld.sendKeys(ADMINISTRATOR);
-        WebElement password = webDriver.findElement(By.xpath(PATHTOPSWD));
-        password.sendKeys(PASSWORD);
-        webDriver.findElement(By.xpath(LOGINBUTTON)).click();
+        webDriver.findElement(By.name(USERNAME)).sendKeys(ADMINISTRATOR);
+        webDriver.findElement(By.name(PATHTOPSWD)).sendKeys(PASSWORD);
+        webDriver.findElement(By.name(LOGINBUTTON)).click();
 
         //RESTORE backup
-        webDriver.findElement(By.xpath(BACKUPSLINK)).click();
-        WebElement backupFile = webDriver.findElement(By.xpath(DATARESTOREFORM));
-        backupFile.sendKeys(fileToRestore);
-        webDriver.findElement(By.xpath(RESTOREBUTTON)).click();
-
+        webDriver.findElement(By.xpath(XP_BACKUPSLINK)).click();
+        webDriver.findElement(By.name(RESTOREPATH)).sendKeys(fileToRestore);
+        webDriver.findElement(By.name(RESTOREBUTTON)).click();
         try {
             webDriver.switchTo().alert().accept();
         } catch (NoAlertPresentException e) {
-            // That's fine.
+            // no op
         }
 
         try{

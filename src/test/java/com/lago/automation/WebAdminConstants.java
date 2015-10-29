@@ -5,6 +5,7 @@ package com.lago.automation;
  */
 public class WebAdminConstants {
 
-    public static final String BACKUP_LINK_PATH = "/app?wicket:bookmarkablePage=:extensis.esp.webadmin.pages.datastore.DatastoreBackupRestorePage";
+    public static final String BACKUP_LINK_TOKEN = "DatastoreBackupRestorePage";
 
 }
+

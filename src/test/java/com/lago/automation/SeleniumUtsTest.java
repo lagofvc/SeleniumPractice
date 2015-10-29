@@ -44,7 +44,7 @@ public class SeleniumUtsTest {
     @Test
     public void testRestoreBackup() {
         testAdministratorLogin();
-        webDriver.findElement(By.xpath("//a[@href='" + WebAdminConstants.BACKUP_LINK_PATH + "']")).click();
+        webDriver.findElement(By.xpath("//a[@href='" + WebAdminConstants.BACKUP_LINK_TOKEN + "']")).click();
         assertEquals(webDriver.getTitle(), "Backups/Restore");
     }
 
